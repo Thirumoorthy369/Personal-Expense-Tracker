@@ -1,0 +1,200 @@
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Brygada+1918:ital,wght@0,400..700;1,400..700&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 99%;
+    --foreground: 220 14% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 14% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 14% 10%;
+
+    --primary: 136 53% 43%; /* Green hsl(136 53% 43%) */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 136 20% 94%;
+    --secondary-foreground: 136 53% 20%;
+
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 10% 46%;
+
+    --accent: 136 30% 92%;
+    --accent-foreground: 136 53% 25%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 220 13% 90%;
+    --input: 220 13% 90%;
+    --ring: 136 53% 43%;
+
+    --radius: 0.75rem;
+
+    --chart-1: 136 53% 43%;
+    --chart-2: 217 91% 60%;
+    --chart-3: 38 92% 50%;
+    --chart-4: 262 83% 58%;
+    --chart-5: 346 87% 53%;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 220 14% 16%;
+    --sidebar-primary: 136 53% 43%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 136 20% 94%;
+    --sidebar-accent-foreground: 136 53% 20%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 136 53% 43%;
+
+    --font-heading: 'Ogg', 'Playfair Display', serif;
+    --font-body: 'Bodoni Moda', 'Georgia', serif;
+    --font-display: 'Brygada 1918', serif;
+    --font-mono: 'Instrument Serif', 'JetBrains Mono', monospace;
+  }
+
+  .dark {
+    --background: 240 10% 4%;
+    --foreground: 0 0% 98%;
+
+    --card: 240 10% 8%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 240 10% 8%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 142 70% 45%; /* Vibrant Green Emerald */
+    --primary-foreground: 0 0% 98%;
+
+    --secondary: 240 6% 15%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 240 6% 14%;
+    --muted-foreground: 240 5% 65%;
+
+    --accent: 142 50% 18%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 240 6% 18%;
+    --input: 240 6% 18%;
+    --ring: 142 70% 45%;
+
+    --chart-1: 142 70% 55%;
+    --chart-2: 217 91% 70%;
+    --chart-3: 38 92% 65%;
+    --chart-4: 262 83% 70%;
+    --chart-5: 346 87% 65%;
+
+    --sidebar-background: 240 10% 5%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 142 70% 45%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 6% 14%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 240 6% 16%;
+    --sidebar-ring: 142 70% 45%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html, body {
+    @apply bg-background text-foreground antialiased selection:bg-primary/20 selection:text-primary min-h-screen overflow-x-hidden;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  /* CUSTOM STYLING FOR NATIVE SELECT OPTIONS ACROSS ALL PAGES */
+  select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2310b981' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m6 9 6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1.1em;
+    padding-right: 2.5rem !important;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+
+  select:hover {
+    border-color: rgba(16, 185, 129, 0.4);
+    box-shadow: 0 2px 8px -2px rgba(16, 185, 129, 0.15);
+  }
+
+  select:focus {
+    outline: none;
+    border-color: rgba(16, 185, 129, 0.6);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+  }
+
+  select option {
+    background-color: #ffffff;
+    color: #0f172a;
+    padding: 12px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .dark select option {
+    background-color: #121318;
+    color: #f8fafc;
+    padding: 12px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .dark select option:hover,
+  .dark select option:focus,
+  .dark select option:active,
+  .dark select option:checked {
+    background-color: #1e293b !important;
+    color: #34d399 !important;
+  }
+
+  /* Custom Calendar Date Picker Styling */
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.6) sepia(1) saturate(5) hue-rotate(100deg);
+    cursor: pointer;
+  }
+
+  /* Disable spin buttons and accidental scroll changes on number inputs */
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  /* Scrollbar custom styling */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground/20 rounded-full hover:bg-muted-foreground/40 transition-colors;
+  }
+}
+
+/* Glassmorphism utility classes */
+.glass-panel {
+  @apply bg-card/90 backdrop-blur-md border border-border/60 shadow-xl;
+}
+
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-300 dark:from-emerald-400 dark:via-teal-300 dark:to-emerald-200;
+}
