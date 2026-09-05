@@ -4,6 +4,7 @@ import { useWorkspace } from '../context/WorkspaceContext';
 import { storageApi } from '../lib/storage';
 import { ShieldAlert, Users, UserCheck, UserX, Key, Activity, Trash2, Edit2, ShieldCheck, Lock, AlertTriangle } from 'lucide-react';
 import { CustomSelect } from '../components/ui/CustomSelect';
+import { Unauthorized } from './Unauthorized';
 
 export function Admin() {
   const { user: currentUser, isAdmin } = useAuth();
@@ -30,22 +31,7 @@ export function Admin() {
 
   // STRICT ACCESS GUARD FOR NON-ADMIN / NEW USERS
   if (!isAdmin) {
-    return (
-      <div className="max-w-xl mx-auto my-12 bg-card border-2 border-rose-500/30 p-8 rounded-2xl text-center space-y-4 shadow-2xl">
-        <div className="w-16 h-16 rounded-full bg-rose-500/10 text-rose-500 flex items-center justify-center mx-auto">
-          <Lock className="w-8 h-8" />
-        </div>
-        <div className="space-y-1">
-          <h2 className="text-2xl font-heading font-bold text-foreground">403 Access Denied</h2>
-          <p className="text-xs text-muted-foreground leading-relaxed">
-            The System Admin Console is strictly restricted. Only the primary administrator (<span className="font-mono text-rose-500 font-semibold">mr.thirumoorthys@gmail.com</span>) is granted access.
-          </p>
-        </div>
-        <div className="p-3 bg-muted/40 rounded-xl text-[11px] font-mono text-muted-foreground">
-          Logged in as: {currentUser?.email || 'Guest User'} (Standard User - Restricted)
-        </div>
-      </div>
-    );
+    return <Unauthorized />;
   }
 
   const handleToggleSuspend = async (usr) => {

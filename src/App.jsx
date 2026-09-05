@@ -7,6 +7,7 @@ import { WorkspaceProvider } from './context/WorkspaceContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { Layout } from './components/Layout';
 import { ScrollToTop } from './components/ScrollToTop';
+import { ErrorBoundary } from './components/ErrorBoundary';
 
 import { Login } from './pages/auth/Login';
 import { Register } from './pages/auth/Register';
@@ -28,46 +29,54 @@ import { Calculator } from './pages/Calculator';
 import { Automations } from './pages/Automations';
 import { Settings } from './pages/Settings';
 import { Admin } from './pages/Admin';
+import { Unauthorized } from './pages/Unauthorized';
+import { NotFound } from './pages/NotFound';
 
 export function App() {
   return (
-    <ThemeProvider>
-      <AuthProvider>
-        <WorkspaceProvider>
-          <BrowserRouter>
-            <ScrollToTop />
-            <Routes>
-              {/* PUBLIC AUTH ROUTES */}
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/forgot-password" element={<ForgotPassword />} />
-              <Route path="/reset-password" element={<ResetPassword />} />
+    <ErrorBoundary>
+      <ThemeProvider>
+        <AuthProvider>
+          <WorkspaceProvider>
+            <BrowserRouter>
+              <ScrollToTop />
+              <Routes>
+                {/* PUBLIC AUTH ROUTES */}
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/forgot-password" element={<ForgotPassword />} />
+                <Route path="/reset-password" element={<ResetPassword />} />
 
-              {/* PROTECTED APP GROUP */}
-              <Route element={<ProtectedRoute />}>
-                <Route element={<Layout />}>
-                  <Route path="/" element={<Dashboard />} />
-                  <Route path="/accounts" element={<Accounts />} />
-                  <Route path="/transactions" element={<Transactions />} />
-                  <Route path="/budgets" element={<Budgets />} />
-                  <Route path="/reports" element={<Reports />} />
-                  <Route path="/cashflow" element={<Cashflow />} />
-                  <Route path="/recurring" element={<Recurring />} />
-                  <Route path="/calendar" element={<CalendarPage />} />
-                  <Route path="/debts-loans" element={<DebtsLoans />} />
-                  <Route path="/bills" element={<Bills />} />
-                  <Route path="/yearly" element={<Yearly />} />
-                  <Route path="/calculator" element={<Calculator />} />
-                  <Route path="/automations" element={<Automations />} />
-                  <Route path="/settings" element={<Settings />} />
-                  <Route path="/admin" element={<Admin />} />
+                {/* PROTECTED APP GROUP */}
+                <Route element={<ProtectedRoute />}>
+                  <Route element={<Layout />}>
+                    <Route path="/" element={<Dashboard />} />
+                    <Route path="/accounts" element={<Accounts />} />
+                    <Route path="/transactions" element={<Transactions />} />
+                    <Route path="/budgets" element={<Budgets />} />
+                    <Route path="/reports" element={<Reports />} />
+                    <Route path="/cashflow" element={<Cashflow />} />
+                    <Route path="/recurring" element={<Recurring />} />
+                    <Route path="/calendar" element={<CalendarPage />} />
+                    <Route path="/debts-loans" element={<DebtsLoans />} />
+                    <Route path="/bills" element={<Bills />} />
+                    <Route path="/yearly" element={<Yearly />} />
+                    <Route path="/calculator" element={<Calculator />} />
+                    <Route path="/automations" element={<Automations />} />
+                    <Route path="/settings" element={<Settings />} />
+                    <Route path="/admin" element={<Admin />} />
+                    <Route path="/unauthorized" element={<Unauthorized />} />
+                  </Route>
                 </Route>
-              </Route>
-            </Routes>
-          </BrowserRouter>
-        </WorkspaceProvider>
-      </AuthProvider>
-    </ThemeProvider>
+
+                {/* 404 NOT FOUND WILDCARD ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </WorkspaceProvider>
+        </AuthProvider>
+      </ThemeProvider>
+    </ErrorBoundary>
   );
 }
 
