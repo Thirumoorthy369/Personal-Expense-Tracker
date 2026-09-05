@@ -7,7 +7,7 @@ export function LegalTermsModal({ isOpen, onClose }) {
   const [copiedEmail, setCopiedEmail] = useState(false);
 
   const handleCopyEmail = () => {
-    navigator.clipboard.writeText('mr.thirumoorthys@gmail.com');
+    navigator.clipboard.writeText('privacy@example.com');
     setCopiedEmail(true);
     setTimeout(() => setCopiedEmail(false), 2000);
   };
@@ -192,12 +192,12 @@ export function LegalTermsModal({ isOpen, onClose }) {
                   <p className="text-muted-foreground text-xs mt-0.5">For privacy requests, GDPR data export, or legal notices, contact:</p>
                   <div className="flex items-center gap-2 mt-2">
                     <a
-                      href="mailto:mr.thirumoorthys@gmail.com?subject=Legal%20%26%20Privacy%20Inquiry%20-%20Personal%20Tracker"
+                      href="mailto:privacy@example.com?subject=Legal%20%26%20Privacy%20Inquiry%20-%20Personal%20Tracker"
                       className="text-primary font-medium hover:underline text-xs bg-primary/10 px-2.5 py-1 rounded-lg border border-primary/20 flex items-center gap-1.5 transition-colors"
                       title="Click to compose email"
                     >
                       <Mail className="w-3.5 h-3.5" />
-                      <span>mr.thirumoorthys@gmail.com</span>
+                      <span>privacy@example.com</span>
                     </a>
                     <button
                       onClick={handleCopyEmail}

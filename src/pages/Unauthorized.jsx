@@ -16,7 +16,7 @@ export function Unauthorized() {
           </span>
           <h1 className="text-2xl font-heading font-bold text-foreground">Access Restricted</h1>
           <p className="text-xs text-muted-foreground leading-relaxed">
-            You do not have administrator privileges to view this section. This resource is restricted to system administrators (`mr.thirumoorthys@gmail.com`) and workspace owners.
+            You do not have administrator privileges to view this section. This resource is restricted to system administrators (`admin@example.com`) and workspace owners.
           </p>
         </div>
 
@@ -30,7 +30,7 @@ export function Unauthorized() {
           </Link>
 
           <a
-            href="mailto:mr.thirumoorthys@gmail.com?subject=Access%20Request%20-%20Personal%20Tracker"
+            href="mailto:admin@example.com?subject=Access%20Request%20-%20Personal%20Tracker"
             className="px-5 py-2.5 bg-muted hover:bg-muted/80 text-foreground font-semibold rounded-xl text-xs flex items-center justify-center gap-2 border border-border transition-colors"
           >
             <Mail className="w-4 h-4" />

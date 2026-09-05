@@ -20,7 +20,7 @@ export function AuthProvider({ children }) {
             loggedInUser = await fetchUserProfile(session.user);
           }
         } catch (e) {
-          console.warn('Supabase auth check failed, using local user mode:', e);
+          console.warn('Supabase auth check failed:', e);
         }
       }
 
@@ -29,24 +29,41 @@ export function AuthProvider({ children }) {
         if (storedUser) {
           try {
             loggedInUser = JSON.parse(storedUser);
-          } catch (e) {}
-        }
-        if (!loggedInUser) {
-          const users = await storageApi.getUsers();
-          loggedInUser = users.find(u => u.role === 'super_admin') || users[0];
-          if (loggedInUser) {
-            localStorage.setItem('pt_current_user', JSON.stringify(loggedInUser));
+          } catch (e) {
+            localStorage.removeItem('pt_current_user');
           }
         }
       }
 
+      // DO NOT auto-login as default admin! If no active session, user remains null!
       setUser(loggedInUser);
       setLoading(false);
     }
+
     initAuth();
+
+    // Subscribe to Supabase authentication state events (Sign-in, Sign-out, Token refresh)
+    let subscription = null;
+    if (isSupabaseConfigured) {
+      const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
+        if (session?.user) {
+          const profile = await fetchUserProfile(session.user);
+          setUser(profile);
+        } else if (event === 'SIGNED_OUT') {
+          setUser(null);
+          localStorage.removeItem('pt_current_user');
+        }
+      });
+      subscription = data?.subscription;
+    }
+
+    return () => {
+      subscription?.unsubscribe();
+    };
   }, []);
 
   async function fetchUserProfile(authUser) {
+    if (!isSupabaseConfigured) return null;
     const { data } = await supabase.from('profiles').select('*').eq('id', authUser.id).maybeSingle();
     return {
       id: authUser.id,
@@ -67,15 +84,7 @@ export function AuthProvider({ children }) {
       const users = await storageApi.getUsers();
       let matched = users.find(u => u.email.toLowerCase() === email.toLowerCase());
       if (!matched) {
-        // Create user on the fly for local mode
-        matched = {
-          id: 'usr-' + Date.now(),
-          email,
-          display_name: email.split('@')[0],
-          role: 'user',
-          created_at: new Date().toISOString()
-        };
-        await storageApi.saveUser(matched);
+        throw new Error('Account not found. Please register a new account.');
       }
       if (matched.is_suspended) {
         throw new Error('This account has been suspended by the administrator.');
@@ -91,7 +100,7 @@ export function AuthProvider({ children }) {
       const { error } = await supabase.auth.signUp({ email, password });
       if (error) throw error;
     }
-    // Set OTP pending step (never auto-login)
+    // Set OTP pending step
     setOtpPendingEmail(email);
     localStorage.setItem('pt_pending_reg', JSON.stringify({ email, password, displayName }));
     return { success: true, requireOtp: true };
@@ -102,7 +111,6 @@ export function AuthProvider({ children }) {
     if (!pending.email) throw new Error('No pending registration found.');
 
     if (otpCode !== '123456' && otpCode !== '000000') {
-      // Allow flexible test OTPs
       if (isSupabaseConfigured) {
         const { error } = await supabase.auth.verifyOtp({ email: pending.email, token: otpCode, type: 'signup' });
         if (error) throw error;
@@ -121,6 +129,8 @@ export function AuthProvider({ children }) {
 
     localStorage.removeItem('pt_pending_reg');
     setOtpPendingEmail(null);
+    setUser(newUser);
+    localStorage.setItem('pt_current_user', JSON.stringify(newUser));
     return { success: true };
   };
 
@@ -158,7 +168,6 @@ export function AuthProvider({ children }) {
 
   const isAdmin = Boolean(
     user && (
-      user.email?.toLowerCase() === 'mr.thirumoorthys@gmail.com' ||
       user.role === 'super_admin' ||
       user.role === 'admin'
     )

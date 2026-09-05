@@ -57,18 +57,18 @@ export function toValidUuid(str) {
   return `${part1}-${part2}-${part3}-${part4}-${part5}`.toLowerCase();
 }
 
-// DEFAULT INITIAL REAL DATA FOR USER THIRUMOORTHY S
+// DEFAULT INITIAL DATA SEED
 const DEFAULT_USER = {
   id: 'user-default-001',
-  email: 'mr.thirumoorthys@gmail.com',
-  display_name: 'Thirumoorthy S',
+  email: 'admin@example.com',
+  display_name: 'Primary Admin',
   role: 'super_admin',
   created_at: new Date().toISOString()
 };
 
 const DEFAULT_WORKSPACE = {
   id: 'ws-default-001',
-  name: "Thiru's Primary Vault",
+  name: "Primary Vault",
   owner_id: DEFAULT_USER.id,
   currency: 'INR',
   created_at: new Date().toISOString()

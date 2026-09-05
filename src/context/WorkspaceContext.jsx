@@ -46,8 +46,8 @@ export function WorkspaceProvider({ children }) {
     const wsMembers = await storageApi.getWorkspaceMembers(ws.id);
     setMembers(wsMembers);
 
-    const isOwner = !ws.owner_id || ws.owner_id === user?.id || ws.owner_id === 'user-default-001' || (user?.id && ws.owner_id && ws.owner_id.includes(user.id.slice(0, 8)));
-    const isSuperAdmin = !user || user.role === 'super_admin' || user.role === 'admin' || user.email?.toLowerCase() === 'mr.thirumoorthys@gmail.com';
+    const isOwner = ws.owner_id === user?.id || (user?.id && ws.owner_id && ws.owner_id.includes(user.id.slice(0, 8)));
+    const isSuperAdmin = user?.role === 'super_admin' || user?.role === 'admin';
 
     if (isOwner || isSuperAdmin) {
       setActiveMemberRole('admin');

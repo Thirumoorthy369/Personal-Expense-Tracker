@@ -37,7 +37,7 @@ export function MonthlyDigestModal({ isOpen, onClose }) {
   const upcomingBills = activeBills.filter(b => b.due_date && b.due_date >= new Date().toISOString().split('T')[0]);
 
   // Recipient email
-  const recipientEmail = user?.email || 'mr.thirumoorthys@gmail.com';
+  const recipientEmail = user?.email || 'user@example.com';
   const recipientName = user?.display_name || user?.email?.split('@')[0] || 'Member';
 
   // Email Body Text
@@ -60,7 +60,7 @@ Here is your Automated Monthly Financial Summary for ${monthLabel(currentMonth)}
 • Upcoming Bills:         ${upcomingBills.length} item(s)
 
 Generate automated records directly from Personal Tracker.
-Contact: mr.thirumoorthys@gmail.com
+Contact: support@example.com
 `.trim();
 
   const mailtoUrl = `mailto:${recipientEmail}?subject=${emailSubject}&body=${encodeURIComponent(emailBodyText)}`;

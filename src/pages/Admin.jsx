@@ -35,7 +35,7 @@ export function Admin() {
   }
 
   const handleToggleSuspend = async (usr) => {
-    if (usr.email === 'mr.thirumoorthys@gmail.com') {
+    if (usr.role === 'super_admin') {
       return alert('Primary Super Admin account cannot be suspended.');
     }
     if (!window.confirm(`${usr.is_suspended ? 'Reactivate' : 'Suspend'} user ${usr.email}?`)) return;
@@ -45,7 +45,7 @@ export function Admin() {
   };
 
   const handleDeleteUser = async (usr) => {
-    if (usr.email === 'mr.thirumoorthys@gmail.com') {
+    if (usr.role === 'super_admin') {
       return alert('Primary Super Admin account cannot be deleted.');
     }
     if (!window.confirm(`Permanently delete user account ${usr.email}? This action cannot be undone.`)) return;
@@ -78,13 +78,13 @@ export function Admin() {
           <div className="space-y-1">
             <div className="flex items-center gap-2">
               <h2 className="text-xl font-heading font-bold text-foreground">
-                {currentUser?.display_name || 'Thirumoorthy S'}
+                {currentUser?.display_name || 'System Administrator'}
               </h2>
               <span className="bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 font-mono text-[10px] font-bold px-2.5 py-0.5 rounded-full border border-emerald-500/30">
                 SUPER ADMIN & VAULT OWNER
               </span>
             </div>
-            <p className="text-xs font-mono text-emerald-500 font-semibold">mr.thirumoorthys@gmail.com</p>
+            <p className="text-xs font-mono text-emerald-500 font-semibold">{currentUser?.email || 'admin@example.com'}</p>
             <p className="text-[11px] text-muted-foreground">Primary Owner • Full System Control • User Management & Access Rights</p>
           </div>
         </div>
@@ -134,7 +134,7 @@ export function Admin() {
             </thead>
             <tbody className="divide-y divide-border/40">
               {users.map(usr => {
-                const isPrimaryAdmin = usr.email === 'mr.thirumoorthys@gmail.com';
+                const isPrimaryAdmin = usr.role === 'super_admin';
 
                 return (
                   <tr key={usr.id} className={`hover:bg-muted/20 transition-colors ${isPrimaryAdmin ? 'bg-emerald-500/5' : ''}`}>

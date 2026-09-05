@@ -40,7 +40,7 @@ export function Login() {
             <Mail className="w-4 h-4 absolute left-3 top-3 text-muted-foreground/60" />
             <input
               type="email"
-              placeholder="mr.thirumoorthys@gmail.com"
+              placeholder="user@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full pl-9 pr-3 py-2.5 bg-background border border-border rounded-xl text-foreground text-xs placeholder:text-muted-foreground/40 focus:ring-1 focus:ring-primary focus:border-primary font-medium"
